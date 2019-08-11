@@ -31,9 +31,10 @@ hook.Add( "PlayerInitialSpawn", "CFC_PlayerInitialSpawn", onPlayerInitialSpawn )
 local function onPlayerDisconnect( data )
     local name = data.name
     local steamID = data.networkid
+    local userID = data.userid
     local isBot = data.bot
     local reason = data.reason
-    if isBot then return end
+    local plyTeam = Player( userID ):Team()
 
     MsgN( "Player " .. name .. " has left the server. (" .. reason .. ")" )
 
@@ -41,6 +42,7 @@ local function onPlayerDisconnect( data )
         net.WriteString( name )
         net.WriteString( steamID )
         net.WriteString( reason )
+        net.WriteInt( plyTeam, 11 )
     net.Broadcast()
 end
 
