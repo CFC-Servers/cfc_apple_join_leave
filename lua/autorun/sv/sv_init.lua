@@ -13,6 +13,7 @@ hook.Add( "PlayerConnect", "CFC_OnPlayerConnect", onPlayerConnect )
 
 local function onPlayerInitialSpawn( ply )
     if not IsValid( ply ) then return end
+    MsgN( ply:Name() .. " has spawned in the server." )
 
     net.Start( "cfc_playerinitialspawn" )
         net.WriteEntity( ply )
