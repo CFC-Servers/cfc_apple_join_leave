@@ -39,7 +39,7 @@ local function onPlayerDisconnect( data )
     local reason = data.reason
 
     if IsValid( ply ) then
-        plyTeam = Player( userID ):Team()
+        plyTeam = ply:Team()
     end
 
     MsgN( "Player " .. name .. " has left the server. (" .. reason .. ")" )
