@@ -29,14 +29,14 @@ end
 hook.Add( "PlayerInitialSpawn", "CFC_PlayerInitialSpawn", onPlayerInitialSpawn )
 
 local function onPlayerDisconnect( data )
-    local ply = Player( userID )
-    local plyTeam = TEAM_UNASSIGNED
-
     local name = data.name
     local steamID = data.networkid
     local userID = data.userid
     local isBot = data.bot
     local reason = data.reason
+
+    local ply = Player( userID )
+    local plyTeam = TEAM_UNASSIGNED
 
     if IsValid( ply ) then
         plyTeam = ply:Team()
