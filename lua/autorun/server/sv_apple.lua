@@ -34,14 +34,8 @@ local function onPlayerDisconnect( data )
     local userID = data.userid
     local isBot = data.bot
     local reason = data.reason
-
-    local ply = Player( userID )
-    local plyTeam = TEAM_UNASSIGNED
-
-    if IsValid( ply ) then
-        plyTeam = ply:Team()
-    end
-
+    local plyTeam = IsValid( ply ) and Player( userID ):Team() or TEAM_UNASSIGNED
+    
     MsgN( "Player " .. name .. " has left the server. (" .. reason .. ")" )
 
     net.Start( "cfc_playerdisconnect" )
