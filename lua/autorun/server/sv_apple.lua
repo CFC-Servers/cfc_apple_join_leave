@@ -29,12 +29,18 @@ end
 hook.Add( "PlayerInitialSpawn", "CFC_PlayerInitialSpawn", onPlayerInitialSpawn )
 
 local function onPlayerDisconnect( data )
+    local ply = Player( userID )
+    local plyTeam = TEAM_UNASSIGNED
+
     local name = data.name
     local steamID = data.networkid
     local userID = data.userid
     local isBot = data.bot
     local reason = data.reason
-    local plyTeam = Player( userID ):Team()
+
+    if IsValid( ply ) then
+        plyTeam = Player( userID ):Team()
+    end
 
     MsgN( "Player " .. name .. " has left the server. (" .. reason .. ")" )
 
