@@ -34,7 +34,8 @@ local function onPlayerDisconnect( data )
     local userID = data.userid
     local isBot = data.bot
     local reason = data.reason
-    local plyTeam = IsValid( ply ) and Player( userID ):Team() or TEAM_UNASSIGNED
+    local ply = Player( userID )
+    local plyTeam = IsValid( ply ) and ply:Team() or TEAM_UNASSIGNED
     
     MsgN( "Player " .. name .. " has left the server. (" .. reason .. ")" )
 
