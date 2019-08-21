@@ -6,6 +6,7 @@ end)
 
 net.Receive( "cfc_playerinitialspawn", function( len )
     local ply = net.ReadEntity()
+    if not IsValid( ply ) then return end
 
     local name = ply:Nick()
     local sID = ply:SteamID()
