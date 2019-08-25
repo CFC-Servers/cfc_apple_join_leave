@@ -5,12 +5,9 @@ net.Receive( "cfc_playerconnect", function( len )
 end)
 
 net.Receive( "cfc_playerinitialspawn", function( len )
-    local ply = net.ReadEntity()
-    if not IsValid( ply ) then return end
-
-    local name = ply:Nick()
-    local sID = ply:SteamID()
-    local plyTeam = ply:Team()
+    local name = net.ReadString()
+    local sID = net.ReadString()
+    local plyTeam = net.ReadInt( 11 )
     local teamColor = team.GetColor( plyTeam )
 
     chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamColor, name, Color( 255, 255, 255 ), " (" .. sID .. ") has spawned in the server." )
