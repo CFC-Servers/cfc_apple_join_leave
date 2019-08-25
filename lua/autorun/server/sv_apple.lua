@@ -16,12 +16,18 @@ hook.Add( "PlayerConnect", "CFC_OnPlayerConnect", onPlayerConnect )
 
 local function onPlayerInitialSpawn( ply )
     if not IsValid( ply ) then return end
+    local name = ply:Name()
+    local steamID = ply:SteamID()
+    local plyTeam = ply:Team()
+
     MsgN( ply:Name() .. " has spawned in the server." )
     table.insert( playerList, ply )
 
     timer.Simple( 3, function()
         net.Start( "cfc_playerinitialspawn" )
-            net.WriteEntity( ply )
+            net.WriteString( name )
+            net.WriteString( steamID )
+            net.WriteInt( plyTeam, 11 )
         net.Broadcast()
     end)
 end
