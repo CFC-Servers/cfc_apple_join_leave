@@ -2,7 +2,6 @@ gameevent.Listen( "player_disconnect" )
 util.AddNetworkString( "cfc_playerconnect" )
 util.AddNetworkString( "cfc_playerinitialspawn" )
 util.AddNetworkString( "cfc_playerdisconnect" )
-local playerList = playerList or {}
 
 local function onPlayerConnect( plyName, ip )
     MsgN( "Player ".. plyName .. " has connected to the server." )
@@ -18,12 +17,12 @@ local function onPlayerInitialSpawn( ply )
     if not IsValid( ply ) then return end
     local name = ply:Name()
     local steamID = ply:SteamID()
-    local plyTeam = ply:Team()
 
-    MsgN( ply:Name() .. " has spawned in the server." )
-    table.insert( playerList, ply )
+    MsgN( name .. " has spawned in the server." )
 
     timer.Simple( 3, function()
+        local plyTeam = ply:Team()
+
         net.Start( "cfc_playerinitialspawn" )
             net.WriteString( name )
             net.WriteString( steamID )
