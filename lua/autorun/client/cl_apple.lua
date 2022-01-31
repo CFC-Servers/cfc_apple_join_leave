@@ -1,5 +1,4 @@
 local function formatTime( seconds )
-    seconds = 312
     if seconds < 61 then
         return string.format( "took %d seconds", seconds )
     end
@@ -26,7 +25,7 @@ net.Receive( "cfc_playerinitialspawn_ajl", function()
     chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamColor, name, Color( 255, 255, 255 ), " (" .. sID .. ") has spawned in the server (" .. formatTime( joinTime ) .. ")." )
 end)
 
-net.Receive( "cfc_playerdisconnect_ajl", function( len )
+net.Receive( "cfc_playerdisconnect_ajl", function()
     local name = net.ReadString()
     local sID = net.ReadString()
     local reason = net.ReadString()
