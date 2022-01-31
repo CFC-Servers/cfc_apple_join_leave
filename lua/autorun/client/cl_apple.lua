@@ -1,6 +1,6 @@
 gameevent.Listen( "player_disconnect" )
 
-net.Receive( "cfc_playerconnect", function( len )
+net.Receive( "cfc_playerconnect", function()
     local name = net.ReadString()
 
     chat.AddText( Color( 255, 0, 255 ), "[Server] ", Color( 255, 255, 255 ), name .. " has connected to the server." )
