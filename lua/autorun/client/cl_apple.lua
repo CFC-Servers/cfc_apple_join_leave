@@ -1,5 +1,17 @@
 gameevent.Listen( "player_disconnect" )
 
+local function formatTime( seconds )
+    seconds = 312
+    if seconds < 61 then
+        return string.format( "took %d seconds", seconds )
+    end
+
+    local minutes = math.floor( seconds / 60 )
+    seconds = seconds % 60
+
+    return string.format( "took %dm %02ds", minutes, seconds )
+end
+
 net.Receive( "cfc_playerconnect", function()
     local name = net.ReadString()
 
@@ -11,11 +23,12 @@ net.Receive( "cfc_playerinitialspawn", function()
     local sID = net.ReadString()
     local plyTeam = net.ReadInt( 11 )
     local teamColor = team.GetColor( plyTeam )
+    local joinTime = net.ReadInt( 13 )
 
-    chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamColor, name, Color( 255, 255, 255 ), " (" .. sID .. ") has spawned in the server." )
+    chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamColor, name, Color( 255, 255, 255 ), " (" .. sID .. ") has spawned in the server (" .. formatTime( joinTime ) .. ")." )
 end)
 
-local function onPlayerDisconnect()
+local function onPlayerDisconnect( data )
     local name = data.name
     local steamID = data.networkid
     local userID = data.userid
