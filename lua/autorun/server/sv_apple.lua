@@ -60,4 +60,4 @@ local function onPlayerDisconnect( data )
     net.Broadcast()
 end
 
-hook.Add( "player_disconnect", "CFC_OnPlayerDisconnect_AppleJoinLeave", onPlayerDisconnect ) 
+hook.Add( "player_disconnect", "CFC_OnPlayerDisconnect_AppleJoinLeave", onPlayerDisconnect )
