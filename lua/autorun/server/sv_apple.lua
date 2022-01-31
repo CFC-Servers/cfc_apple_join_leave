@@ -5,7 +5,7 @@ util.AddNetworkString( "cfc_playerinitialspawn_ajl" )
 util.AddNetworkString( "cfc_playerdisconnect_ajl" )
 
 local function onPlayerConnect( data )
-    timer.Simple( 0, function() -- Gotta wait a single tick otherwise the player doesn't exist yet
+    timer.Simple( 0, function() -- Gotta wait a single tick otherwise the player doesn't exist yet, doesn't work in first load p2p
         local plyName = data.name
         local ply = Player( data.userid )
         ply.AppleConnect = CurTime()
@@ -29,7 +29,7 @@ local function onPlayerInitialSpawn( ply )
 
     timer.Simple( 3, function()
         local plyTeam = ply:Team()
-        local joinTime = CurTime() - ply.AppleConnect
+        local joinTime = CurTime() - ( ply.AppleConnect or CurTime() )
 
         net.Start( "cfc_playerinitialspawn_ajl" )
             net.WriteString( name )
