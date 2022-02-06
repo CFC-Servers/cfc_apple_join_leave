@@ -4,18 +4,17 @@ util.AddNetworkString( "cfc_playerconnect_ajl" )
 util.AddNetworkString( "cfc_playerinitialspawn_ajl" )
 util.AddNetworkString( "cfc_playerdisconnect_ajl" )
 
+local connectingSteamId = {}
+
 local function onPlayerConnect( data )
-    timer.Simple( 0, function() -- Gotta wait a single tick otherwise the player doesn't exist yet, doesn't work in first load p2p
-        local plyName = data.name
-        local ply = Player( data.userid )
-        ply.AppleConnect = CurTime()
+    local plyName = data.name
+    connectingSteamId[data.networkid] = CurTime()
 
-        MsgN( "Player " .. plyName .. " has connected to the server." )
+    MsgN( "Player " .. plyName .. " has connected to the server." )
 
-        net.Start( "cfc_playerconnect_ajl" )
-            net.WriteString( plyName )
-        net.Broadcast()
-    end)
+    net.Start( "cfc_playerconnect_ajl" )
+        net.WriteString( plyName )
+    net.Broadcast()
 end
 
 hook.Add( "player_connect", "CFC_OnPlayerConnect_AppleJoinLeave", onPlayerConnect )
@@ -29,7 +28,7 @@ local function onPlayerInitialSpawn( ply )
 
     timer.Simple( 3, function()
         local plyTeam = ply:Team()
-        local joinTime = CurTime() - ( ply.AppleConnect or CurTime() )
+        local joinTime = CurTime() - ( connectingSteamId[steamID] or CurTime() ) + 1
 
         net.Start( "cfc_playerinitialspawn_ajl" )
             net.WriteString( name )
