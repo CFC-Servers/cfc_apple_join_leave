@@ -22,6 +22,11 @@ net.Receive( "cfc_playerinitialspawn_ajl", function()
     local teamColor = team.GetColor( plyTeam )
     local joinTime = net.ReadInt( 13 )
 
+    if joinTime == 0 then
+        chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamColor, name, Color( 255, 255, 255 ), " (" .. sID .. ") has spawned in the server." )
+        return
+    end
+
     chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamColor, name, Color( 255, 255, 255 ), " (" .. sID .. ") has spawned in the server (" .. formatTime( joinTime ) .. ")." )
 end)
 
