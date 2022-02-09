@@ -1,3 +1,6 @@
+local prefixColor = Color( 255, 0, 255 )
+local textColor = Color( 255, 255, 255 )
+
 local function formatTime( seconds )
     if seconds < 61 then
         return string.format( "took %d seconds", seconds )
@@ -12,7 +15,7 @@ end
 net.Receive( "cfc_playerconnect_ajl", function()
     local name = net.ReadString()
 
-    chat.AddText( Color( 255, 0, 255 ), "[Server] ", Color( 255, 255, 255 ), name .. " has connected to the server." )
+    chat.AddText( prefixColor, "[Server] ", textColor, name .. " has connected to the server." )
 end)
 
 net.Receive( "cfc_playerinitialspawn_ajl", function()
@@ -23,11 +26,11 @@ net.Receive( "cfc_playerinitialspawn_ajl", function()
     local joinTime = net.ReadInt( 13 )
 
     if joinTime == 0 then
-        chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamColor, name, Color( 255, 255, 255 ), " (" .. sID .. ") has spawned in the server." )
+        chat.AddText( prefixColor, "[Server] ", teamColor, name, textColor, " (" .. sID .. ") has spawned in the server." )
         return
     end
 
-    chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamColor, name, Color( 255, 255, 255 ), " (" .. sID .. ") has spawned in the server (" .. formatTime( joinTime ) .. ")." )
+    chat.AddText( prefixColor, "[Server] ", teamColor, name, textColor, " (" .. sID .. ") has spawned in the server (" .. formatTime( joinTime ) .. ")." )
 end)
 
 net.Receive( "cfc_playerdisconnect_ajl", function()
@@ -37,5 +40,5 @@ net.Receive( "cfc_playerdisconnect_ajl", function()
     local plyTeam = net.ReadInt( 11 )
     local teamCol = team.GetColor( plyTeam )
 
-    chat.AddText( Color( 255, 0, 255 ), "[Server] ", teamCol, name, Color( 255, 255, 255 ), " (" .. sID .. ") has left the server. (" .. reason .. ")" )
+    chat.AddText( prefixColor, "[Server] ", teamCol, name, textColor, " (" .. sID .. ") has left the server. (" .. reason .. ")" )
 end)
