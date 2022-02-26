@@ -27,6 +27,7 @@ local function onPlayerInitialSpawn( ply )
     MsgN( name .. " has spawned in the server." )
 
     timer.Simple( 3, function()
+        if not IsValid( ply ) then return end
         local plyTeam = ply:Team()
         local joinTime = CurTime() - ( connectingSteamId[steamID] or CurTime() ) + 1
 
