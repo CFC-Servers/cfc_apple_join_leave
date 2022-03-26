@@ -4,20 +4,18 @@ util.AddNetworkString( "cfc_playerconnect_ajl" )
 util.AddNetworkString( "cfc_playerinitialspawn_ajl" )
 util.AddNetworkString( "cfc_playerdisconnect_ajl" )
 
-local connectingSteamId = {}
+local function onPlayerAuthed( ply )
+    local name = ply:GetName()
+    ply.AppleJLAuthTime = CurTime()
 
-local function onPlayerConnect( data )
-    local plyName = data.name
-    connectingSteamId[data.networkid] = CurTime()
-
-    MsgN( "Player " .. plyName .. " has connected to the server." )
+    MsgN( "Player " .. name .. " has connected to the server." )
 
     net.Start( "cfc_playerconnect_ajl" )
-        net.WriteString( plyName )
+        net.WriteString( name )
     net.Broadcast()
 end
 
-hook.Add( "player_connect", "CFC_OnPlayerConnect_AppleJoinLeave", onPlayerConnect )
+hook.Add( "PlayerAuthed", "CFC_PlayerAuthed_AppleJoinLeave", onPlayerAuthed )
 
 local function onPlayerInitialSpawn( ply )
     if not IsValid( ply ) then return end
@@ -29,7 +27,7 @@ local function onPlayerInitialSpawn( ply )
     timer.Simple( 3, function()
         if not IsValid( ply ) then return end
         local plyTeam = ply:Team()
-        local joinTime = CurTime() - ( connectingSteamId[steamID] or CurTime() ) + 1
+        local joinTime = CurTime() - ( ply.AppleJLAuthTime or CurTime() ) + 1
 
         net.Start( "cfc_playerinitialspawn_ajl" )
             net.WriteString( name )
@@ -37,6 +35,7 @@ local function onPlayerInitialSpawn( ply )
             net.WriteInt( plyTeam, 11 )
             net.WriteInt( joinTime, 13 )
         net.Broadcast()
+        ply.AppleJLAuthTime = nil
     end)
 end
 
