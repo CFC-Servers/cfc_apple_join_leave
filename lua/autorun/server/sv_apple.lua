@@ -21,27 +21,29 @@ end
 hook.Add( "player_connect", "CFC_OnPlayerConnect_AppleJoinLeave", onPlayerConnect )
 
 local function onPlayerInitialSpawn( ply )
-    if not IsValid( ply ) then return end
-    local name = ply:Name()
-    local steamID = ply:SteamID()
-    local plyTeam = ply:Team()
+    timer.Simple( 0, function()
+        if not IsValid( ply ) then return end
+        local name = ply:Name()
+        local steamID = ply:SteamID()
+        local plyTeam = ply:Team()
 
-    MsgN( name .. " has spawned in the server." )
+        MsgN( name .. " has spawned in the server." )
 
-    -- player_connect only runs when people are connecting to the server. Not when joining from map switch, this checks for map switches.
-    local joinTime
-    if connectingSteamId[steamID] then
-        joinTime = CurTime() - connectingSteamId[steamID]
-    else
-        joinTime = CurTime() - serverStarTime
-    end
+        -- player_connect only runs when people are connecting to the server. Not when joining from map switch, this checks for map switches.
+        local joinTime
+        if connectingSteamId[steamID] then
+            joinTime = CurTime() - connectingSteamId[steamID]
+        else
+            joinTime = CurTime() - serverStarTime
+        end
 
-    net.Start( "cfc_playerinitialspawn_ajl" )
-        net.WriteString( name )
-        net.WriteString( steamID )
-        net.WriteInt( plyTeam, 11 )
-        net.WriteInt( joinTime, 13 )
-    net.Broadcast()
+        net.Start( "cfc_playerinitialspawn_ajl" )
+            net.WriteString( name )
+            net.WriteString( steamID )
+            net.WriteInt( plyTeam, 11 )
+            net.WriteInt( joinTime, 13 )
+        net.Broadcast()
+    end )
 end
 
 hook.Add( "PlayerInitialSpawn", "CFC_PlayerInitialSpawn_AppleJoinLeave", onPlayerInitialSpawn )
