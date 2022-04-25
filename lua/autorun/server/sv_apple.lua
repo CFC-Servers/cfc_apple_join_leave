@@ -21,7 +21,7 @@ end
 hook.Add( "player_connect", "CFC_OnPlayerConnect_AppleJoinLeave", onPlayerConnect )
 
 local function onPlayerInitialSpawn( ply )
-    timer.Simple( 0, function()
+    timer.Simple( 3, function()
         if not IsValid( ply ) then return end
         local name = ply:Name()
         local steamID = ply:SteamID()
@@ -36,6 +36,7 @@ local function onPlayerInitialSpawn( ply )
         else
             joinTime = CurTime() - serverStarTime
         end
+        joinTime = joinTime - 3
 
         net.Start( "cfc_playerinitialspawn_ajl" )
             net.WriteString( name )
