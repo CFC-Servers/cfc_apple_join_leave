@@ -42,3 +42,7 @@ net.Receive( "cfc_playerdisconnect_ajl", function()
 
     chat.AddText( prefixColor, "[Server] ", teamCol, name, textColor, " (" .. sID .. ") has left the server. (" .. reason .. ")" )
 end)
+
+hook.Add( "ChatText", "CFC_ChatText_AppleJoinLeave", function( _, _, _, msgType )
+    if msgType == "joinleave" then return true end
+end )
