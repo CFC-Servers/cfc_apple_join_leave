@@ -37,7 +37,7 @@ net.Receive( "cfc_playerinitialspawn_ajl", function()
         return
     end
 
-    chat.AddText( prefixColor, prefixIcon, teamColor, name, textColor, " (", whiteColor, sID, textColor, ") has spawned in the server (", whiteColor, formatTime( joinTime ), whiteColor, ")." )
+    chat.AddText( prefixColor, prefixIcon, teamColor, name, textColor, " (", whiteColor, sID, textColor, ") has spawned in the server (", whiteColor, formatTime( joinTime ), textColor, ")." )
 end)
 
 net.Receive( "cfc_playerdisconnect_ajl", function()
