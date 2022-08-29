@@ -1,6 +1,12 @@
 local prefixColor = Color( 41, 41, 41 )
 local whiteColor = Color( 255, 255, 255 )
 local textColor = Color( 180, 180, 180 )
+local joinColor = Color( 100, 255, 100 )
+local leaveColor = Color( 255, 100, 100 )
+
+local prefixIcon = "• "
+local joinIcon = "➕ "
+local leaveIcon = "➖ "
 
 local function formatTime( seconds )
     if seconds < 61 then
@@ -16,7 +22,7 @@ end
 net.Receive( "cfc_playerconnect_ajl", function()
     local name = net.ReadString()
 
-    chat.AddText( prefixColor, "• ", whiteColor, name, textColor, " has connected to the server." )
+    chat.AddText( joinColor, joinIcon, whiteColor, name, textColor, " has connected to the server." )
 end)
 
 net.Receive( "cfc_playerinitialspawn_ajl", function()
@@ -27,11 +33,11 @@ net.Receive( "cfc_playerinitialspawn_ajl", function()
     local joinTime = net.ReadInt( 13 )
 
     if joinTime == 0 then
-        chat.AddText( prefixColor, "• ", teamColor, name, textColor, " (", whiteColor, sID, textColor, ") has spawned in the server." )
+        chat.AddText( prefixColor, prefixIcon, teamColor, name, textColor, " (", whiteColor, sID, textColor, ") has spawned in the server." )
         return
     end
 
-    chat.AddText( prefixColor, "• ", teamColor, name, textColor, " (", whiteColor, sID, textColor, ") has spawned in the server (", whiteColor, formatTime( joinTime ), whiteColor, ")." )
+    chat.AddText( prefixColor, prefixIcon, teamColor, name, textColor, " (", whiteColor, sID, textColor, ") has spawned in the server (", whiteColor, formatTime( joinTime ), whiteColor, ")." )
 end)
 
 net.Receive( "cfc_playerdisconnect_ajl", function()
@@ -41,7 +47,7 @@ net.Receive( "cfc_playerdisconnect_ajl", function()
     local plyTeam = net.ReadInt( 11 )
     local teamCol = team.GetColor( plyTeam )
 
-    chat.AddText( prefixColor, "• ", teamCol, name, textColor, " (", whiteColor, sID, textColor, ") has left the server. (", whiteColor, reason, textColor, ")" )
+    chat.AddText( leaveColor, leaveIcon, teamCol, name, textColor, " (", whiteColor, sID, textColor, ") has left the server. (", whiteColor, reason, textColor, ")" )
 end)
 
 hook.Add( "ChatText", "CFC_ChatText_AppleJoinLeave", function( _, _, _, msgType )
