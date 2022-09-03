@@ -10,15 +10,16 @@ local serverStarTime = CurTime() -- Likely near 1 always, but worth to set anywa
 local function getOfflineColor(steamID32)
     local ply = ULib.ucl.users[steamID32]
     if not ply then return end
-    
+
     local group = ULib.ucl.groups[ply.group or ""]
     if not group then return end
-    
+
     local team = group.team
+    if not team then return end
     if not (team.color_red and team.color_green and team.color_blue) then return end
-    
+
     local color = Color(
-        tonumber(team.color_red), 
+        tonumber(team.color_red),
         tonumber(team.color_green),
         tonumber(team.color_blue)
     )
