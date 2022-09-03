@@ -16,7 +16,11 @@ local function getOfflineColor(steamID32)
 
     if not (group.team.color_red and group.team.color_green and group.team.color_blue) then return end
     
-    local color = Color(tonumber(group.team.color_red), tonumber(group.team.color_green), tonumber(group.team.color_blue))
+    local color = Color(
+        tonumber(group.team.color_red), 
+        tonumber(group.team.color_green),
+        tonumber(group.team.color_blue)
+    )
     return color
 end
 
