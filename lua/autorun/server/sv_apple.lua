@@ -14,7 +14,7 @@ local function getOfflineColor(steamID32)
     local group = ULib.ucl.groups[ply.group or ""]
     if not group then return end
 
-    if not (group.team.color_red and group.team.color_green and group.team.color_red) then return end
+    if not (group.team.color_red and group.team.color_green and group.team.color_blue) then return end
     
     local color = Color(tonumber(group.team.color_red), tonumber(group.team.color_green), tonumber(group.team.color_blue))
     return color
