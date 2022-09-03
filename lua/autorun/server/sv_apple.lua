@@ -30,7 +30,7 @@ local function onPlayerConnect( data )
 
     net.Start( "cfc_playerconnect_ajl" )
         net.WriteString( plyName )
-        net.WriteColor( getOfflineColor(data.networkid) or prefixColor )
+        net.WriteColor( getOfflineColor( data.networkid ) or prefixColor )
     net.Broadcast()
 end
 
