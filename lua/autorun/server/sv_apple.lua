@@ -7,15 +7,19 @@ util.AddNetworkString( "cfc_playerdisconnect_ajl" )
 local connectingSteamId = {}
 local serverStarTime = CurTime() -- Likely near 1 always, but worth to set anyway
 
+local function defaultGroup()
+    return ULib.ucl.groups[ULib.ACCESS_ALL]
+end
+
 local function getGroup(steamID32)
     local ply = ULib.ucl.users[steamID32]
-    if not ply then return end
+    if not ply then return defaultGroup() end
 
-    return ULib.ucl.groups[ply.group or ""]
+    return ULib.ucl.groups[ply.group or ""] or defaultGroup()
 end
 
 local function getOfflineColor(steamID32)
-    local group = getGroup(steamID32) or ULib.ucl.groups[ULib.ACCESS_ALL]
+    local group = getGroup(steamID32) 
 
     local team = group.team
     if not team then return end
