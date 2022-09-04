@@ -21,7 +21,7 @@ end
 local defaultTeamColor = Color(255, 255, 255)
     
 local function getOfflineColor(steamID32)
-    local group = getGroup(steamID33) 
+    local group = getGroup(steamID32) 
 
     local team = group.team
     if not team then return end
