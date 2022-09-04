@@ -19,14 +19,13 @@ local function getGroup(steamID32)
 end
 
 local defaultTeamColor = Color(255, 255, 255)
-    
+
 local function getOfflineColor(steamID32)
     local group = getGroup(steamID32) 
 
     local team = group.team
     if not team then return end
 
-    
     if team.color_red and team.color_green and team.color_blue then 
     	return Color(
 	        tonumber(team.color_red),
@@ -39,7 +38,7 @@ local function getOfflineColor(steamID32)
 			return ulxTeam.color or color
 		end
 	end
-    
+
     return color
 end
 
