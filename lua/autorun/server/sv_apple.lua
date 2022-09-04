@@ -7,6 +7,43 @@ util.AddNetworkString( "cfc_playerdisconnect_ajl" )
 local connectingSteamId = {}
 local serverStarTime = CurTime() -- Likely near 1 always, but worth to set anyway
 
+local function defaultGroup()
+    return ULib.ucl.groups[ULib.ACCESS_ALL]
+end
+
+local function getGroup(steamID32)
+    local ply = ULib.ucl.users[steamID32]
+    if not ply then return defaultGroup() end
+
+    return ULib.ucl.groups[ply.group or ""] or defaultGroup()
+end
+
+local defaultTeamColor = Color(255, 255, 255)
+    
+local function getOfflineColor(steamID32)
+    local group = getGroup(steamID32) 
+
+    local team = group.team
+    if not team then return end
+    
+    if team.color_red and team.color_green and team.color_blue then 
+        return Color(
+            tonumber(team.color_red),
+            tonumber(team.color_green),
+            tonumber(team.color_blue)
+        )
+    end
+    for _, ulxTeam in pairs(ulx.teams or {}) do
+        if ulxTeam.name == team.name then
+            return ulxTeam.color or defaultTeamColor
+        end
+    end
+    
+    return defaultTeamColor
+end
+
+local prefixColor = Color( 41, 41, 41 )
+
 local function onPlayerConnect( data )
     local plyName = data.name
     connectingSteamId[data.networkid] = CurTime()
@@ -15,6 +52,7 @@ local function onPlayerConnect( data )
 
     net.Start( "cfc_playerconnect_ajl" )
         net.WriteString( plyName )
+        net.WriteColor( getOfflineColor( data.networkid ) or prefixColor )
     net.Broadcast()
 end
 

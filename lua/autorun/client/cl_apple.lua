@@ -16,9 +16,10 @@ end
 
 net.Receive( "cfc_playerconnect_ajl", function()
     local name = net.ReadString()
+    local color = net.ReadColor()
 
-    chat.AddText( prefixColor, prefix, whiteColor, name, textColor, " has connected to the server." )
-end )
+    chat.AddText( prefixColor, prefix, color, name, textColor, " has connected to the server." )
+end)
 
 net.Receive( "cfc_playerinitialspawn_ajl", function()
     local name = net.ReadString()
