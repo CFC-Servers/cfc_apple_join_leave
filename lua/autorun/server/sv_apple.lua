@@ -25,7 +25,6 @@ local function getOfflineColor(steamID32)
 
     local team = group.team
     if not team then return end
-
     
     if team.color_red and team.color_green and team.color_blue then 
         return Color(
