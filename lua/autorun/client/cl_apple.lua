@@ -1,6 +1,6 @@
 local prefixColor = Color( 41, 41, 41 )
 local textColor = Color( 180, 180, 180 )
-local highlightColor = Color( 229, 81, 81 )
+local highlightColor = Color( 255, 255, 255 )
 local prefix = "• "
 
 local function formatTime( seconds )
