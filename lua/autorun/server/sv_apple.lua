@@ -11,34 +11,34 @@ local function defaultGroup()
     return ULib.ucl.groups[ULib.ACCESS_ALL]
 end
 
-local function getGroup(steamID32)
+local function getGroup( steamID32 )
     local ply = ULib.ucl.users[steamID32]
     if not ply then return defaultGroup() end
 
     return ULib.ucl.groups[ply.group or ""] or defaultGroup()
 end
 
-local defaultTeamColor = Color(255, 255, 255)
-    
-local function getOfflineColor(steamID32)
-    local group = getGroup(steamID32) 
+local defaultTeamColor = Color( 255, 255, 255 )
+
+local function getOfflineColor( steamID32 )
+    local group = getGroup( steamID32 )
 
     local team = group.team
     if not team then return end
-    
-    if team.color_red and team.color_green and team.color_blue then 
+
+    if team.color_red and team.color_green and team.color_blue then
         return Color(
-            tonumber(team.color_red),
-            tonumber(team.color_green),
-            tonumber(team.color_blue)
+            tonumber( team.color_red ),
+            tonumber( team.color_green ),
+            tonumber( team.color_blue )
         )
     end
-    for _, ulxTeam in pairs(ulx.teams or {}) do
+    for _, ulxTeam in pairs( ulx.teams or {} ) do
         if ulxTeam.name == team.name then
             return ulxTeam.color or defaultTeamColor
         end
     end
-    
+
     return defaultTeamColor
 end
 

@@ -1,6 +1,6 @@
 local prefixColor = Color( 41, 41, 41 )
-local whiteColor = Color( 255, 255, 255 )
 local textColor = Color( 180, 180, 180 )
+local highlightColor = Color( 255, 255, 255 )
 local prefix = "• "
 
 local function formatTime( seconds )
@@ -19,7 +19,7 @@ net.Receive( "cfc_playerconnect_ajl", function()
     local color = net.ReadColor()
 
     chat.AddText( prefixColor, prefix, color, name, textColor, " has connected to the server." )
-end)
+end )
 
 net.Receive( "cfc_playerinitialspawn_ajl", function()
     local name = net.ReadString()
@@ -29,11 +29,11 @@ net.Receive( "cfc_playerinitialspawn_ajl", function()
     local joinTime = net.ReadInt( 13 )
 
     if joinTime == 0 then
-        chat.AddText( prefixColor, prefix, teamColor, name, textColor, " (", whiteColor, sID, textColor, ") has spawned in the server." )
+        chat.AddText( prefixColor, prefix, teamColor, name, textColor, " (", highlightColor, sID, textColor, ") has spawned in the server." )
         return
     end
 
-    chat.AddText( prefixColor, prefix, teamColor, name, textColor, " (", whiteColor, sID, textColor, ") has spawned in the server (", whiteColor, formatTime( joinTime ), whiteColor, ")." )
+    chat.AddText( prefixColor, prefix, teamColor, name, textColor, " (", highlightColor, sID, textColor, ") has spawned in the server (", highlightColor, formatTime( joinTime ), textColor, ")." )
 end )
 
 net.Receive( "cfc_playerdisconnect_ajl", function()
@@ -43,7 +43,7 @@ net.Receive( "cfc_playerdisconnect_ajl", function()
     local plyTeam = net.ReadInt( 11 )
     local teamCol = team.GetColor( plyTeam )
 
-    chat.AddText( prefixColor, prefix, teamCol, name, textColor, " (", whiteColor, sID, textColor, ") has left the server. (", whiteColor, reason, textColor, ")" )
+    chat.AddText( prefixColor, prefix, teamCol, name, textColor, " (", highlightColor, sID, textColor, ") has left the server. (", highlightColor, reason, textColor, ")" )
 end )
 
 hook.Add( "ChatText", "CFC_ChatText_AppleJoinLeave", function( _, _, _, msgType )
