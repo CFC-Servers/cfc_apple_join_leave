@@ -1,3 +1,4 @@
+require( "playerload" ) -- https://github.com/CFC-Servers/gm_playerload
 gameevent.Listen( "player_connect" )
 gameevent.Listen( "player_disconnect" )
 util.AddNetworkString( "cfc_playerconnect_ajl" )
@@ -85,7 +86,7 @@ local function onPlayerInitialSpawn( ply )
     end )
 end
 
-hook.Add( "PlayerInitialSpawn", "CFC_PlayerInitialSpawn_AppleJoinLeave", onPlayerInitialSpawn )
+hook.Add( "PlayerFullLoad", "CFC_PlayerInitialSpawn_AppleJoinLeave", onPlayerInitialSpawn )
 
 local function onPlayerDisconnect( data )
     local name = data.name
