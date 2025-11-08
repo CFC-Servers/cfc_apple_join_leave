@@ -96,6 +96,8 @@ local function onPlayerDisconnect( data )
     local ply = Player( userID )
     local plyTeam = IsValid( ply ) and ply:Team() or TEAM_UNASSIGNED
 
+    connectingSteamId[data.networkid] = nil
+
     MsgN( "Player " .. name .. " has left the server. (" .. reason .. ")" )
 
     net.Start( "cfc_playerdisconnect_ajl" )
